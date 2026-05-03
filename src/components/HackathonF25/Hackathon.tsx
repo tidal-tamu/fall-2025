@@ -15,29 +15,36 @@ import { AnimatePresence } from "framer-motion";
 
 const HackathonF25 = () => {
     const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+    const [hasCursorPosition, setHasCursorPosition] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [loadingProgress, setLoadingProgress] = useState(0);
 
     useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            setCursorPosition({ x: e.clientX, y: e.clientY });
+            setHasCursorPosition(true);
+        };
+
+        window.addEventListener("mousemove", handleMouseMove, {
+            passive: true,
+        });
+
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!isLoading) {
+            return;
+        }
+
         // Store original values
         const originalOverflow = document.body.style.overflow;
         const originalBackgroundColor = document.body.style.backgroundColor;
 
-        // Only hide overflow and set styles when loading
-        if (isLoading) {
-            document.body.style.overflow = "hidden";
-            document.body.style.backgroundColor = "#121111";
-        } else {
-            // Restore overflow when loading is done
-            document.body.style.overflow = originalOverflow || "";
-            return;
-        }
-
-        const handleMouseMove = (e: MouseEvent) => {
-            setCursorPosition({ x: e.clientX, y: e.clientY });
-        };
-
-        window.addEventListener("mousemove", handleMouseMove);
+        document.body.style.overflow = "hidden";
+        document.body.style.backgroundColor = "#121111";
 
         let browserLoaded = false;
         let imagesLoaded = false;
@@ -113,7 +120,6 @@ const HackathonF25 = () => {
             // Restore original values
             document.body.style.overflow = originalOverflow || "";
             document.body.style.backgroundColor = originalBackgroundColor || "";
-            window.removeEventListener("mousemove", handleMouseMove);
             window.removeEventListener("load", handleWindowLoad);
             clearInterval(progressInterval);
             clearTimeout(safetyTimeout);
@@ -145,6 +151,7 @@ const HackathonF25 = () => {
                     style={{
                         left: `${cursorPosition.x}px`,
                         top: `${cursorPosition.y}px`,
+                        opacity: hasCursorPosition && !isLoading ? 1 : 0,
                     }}
                 />
 
@@ -164,7 +171,7 @@ const HackathonF25 = () => {
                 </div>
 
                 <div className="relative z-20">
-                    <Footer variant="hackathon-fall-25" />
+                    <Footer />
                 </div>
             </div>
         </>

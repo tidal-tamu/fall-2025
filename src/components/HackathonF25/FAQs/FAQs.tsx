@@ -60,18 +60,7 @@ const details2 = [
     },
     {
         question: "How do I sign up?",
-        answer: (
-            <>
-                Fill out our{" "}
-                <a
-                    href="/register"
-                    className="text-[#FFAC29] hover:text-[#FFA722] underline transition-colors duration-200"
-                >
-                    registration form
-                </a>{" "}
-                above! 🤠
-            </>
-        ),
+        answer: "Registration for TIDALHack 2025 is now closed.",
         id: "8",
     },
     {

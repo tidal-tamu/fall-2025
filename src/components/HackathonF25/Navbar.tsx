@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 
 const navLinks: { title: string; path: string; isExternal?: boolean }[] = [
-    { title: "Home", path: "/", isExternal: true },
+    { title: "Home", path: "https://tidaltamu.com", isExternal: true },
     { title: "About", path: "about" },
     { title: "Schedule", path: "schedule" },
     { title: "Prizes", path: "prizes" },
@@ -83,7 +83,7 @@ export default function Navbar({ dark = false }: NavbarProps) {
             transition={{ duration: 0.3, ease: "easeInOut" }}
         >
             <div className="container mx-auto px-6 lg:px-12 py-6 flex items-center justify-between">
-                <a href="/" className="flex items-center cursor-pointer">
+                <a href="https://tidaltamu.com" className="flex items-center cursor-pointer">
                     <img
                         src={
                             dark
